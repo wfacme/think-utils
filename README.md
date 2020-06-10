@@ -8,7 +8,7 @@
 composer require acmecms/think-utils
 ~~~
 ### 文档地址
-[https://www.kancloud.cn/vertex/thinkutils\_00/1738442](https://www.kancloud.cn/vertex/thinkutils_00/1738442)
+[https://www.kancloud.cn/vertex/thinkutils\_00](https://www.kancloud.cn/vertex/thinkutils_00)
 ### 加载服务
 ```
 \acme\basis\Pipeline::class        //扩展thinkphp管道类
