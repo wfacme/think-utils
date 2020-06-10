@@ -1,8 +1,14 @@
 {
     "name": "acmecms/think-utils",
     "description": "thinkphp实用程序",
-    "keywords": ["thinkphp", "tp", "utils", "工具","工具类"],
-	"type": "library",
+    "keywords": [
+        "thinkphp",
+        "tp",
+        "utils",
+        "工具",
+        "工具类"
+    ],
+    "type": "library",
     "license": "mit",
     "authors": [
         {
@@ -10,13 +16,13 @@
             "email": "672462206@qq.com"
         }
     ],
-	"require": {
-		"php": ">=7.0.0",		
-        "topthink/framework": "^6.0.0",
+    "require": {
+        "php": ">=7.0.0",
         "overtrue/wechat": "4.0",
-		"intervention/image": "^2.5"
-	},
-	"autoload": {
+        "topthink/framework": "^6.0.0",
+        "intervention/image": "^2.5"
+    },
+    "autoload": {
         "psr-4": {
             "acme\\": "src"
         }

@@ -1,13 +1,14 @@
 <?php
-declare (strict_types = 1);
-
 namespace acme;
 
-class AcmeService  extends \think\Service
+use think\Service as BaseService;
+
+class AcmeService extends BaseService
 {
 
 	public $bind = [
         'pipeline' => \acme\basis\Pipeline::class,
+        'wechat' => \acme\services\Wechat::class,
     ];
 
     /**
@@ -17,9 +18,12 @@ class AcmeService  extends \think\Service
      */
     public function register()
     {
+        $this->commands([
+            'canvas:create'	 => \acme\command\canvas\Create::class,
+        ]);
     }
 
-    
+
     /**
      * 执行服务
      *
@@ -27,11 +31,6 @@ class AcmeService  extends \think\Service
      */
     public function boot()
     {
-        $this->commands([
-            'canvas:create'	 => \acme\command\canvas\Create::class,
-        ]);
-        $this->app->bind([
-            'wechat' => \acme\services\Wechat::class,
-        ]);
+
     }
 }
