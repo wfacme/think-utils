@@ -12,16 +12,14 @@
     ],
 	"require": {
 		"php": ">=7.0.0",		
-        "overtrue/wechat": "~4.0",
+        "topthink/framework": "^6.0.0",
+        "overtrue/wechat": "4.0",
 		"intervention/image": "^2.5"
 	},
 	"autoload": {
         "psr-4": {
             "acme\\": "src"
-        },
-        "files": [
-            "src/helpers.php"
-        ]
+        }
     },
     "extra": {
         "think": {
