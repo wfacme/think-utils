@@ -12,7 +12,8 @@
     ],
 	"require": {
 		"php": ">=7.0.0",		
-        "overtrue/wechat": "~4.0"
+        "overtrue/wechat": "~4.0",
+		"intervention/image": "^2.5"
 	},
 	"autoload": {
         "psr-4": {
