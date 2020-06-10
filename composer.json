@@ -17,7 +17,7 @@
 	},
 	"autoload": {
         "psr-4": {
-            "acme\\": "src/"
+            "acme\\": "src"
         },
         "files": [
             "src/helpers.php"
