@@ -1,0 +1,40 @@
+ *
+ * 配置参数
+ *
+ * [
+ *     'config' => [
+ *          'width'             => '宽度',
+ *          'height'            => '高度',
+ *          'font'              => '全局字体',
+ *          'filePath'          => '全局文件路径',
+ *          'background'        => '背景色',
+ *          'backgroundImage'   => '背景图',
+ *      ],
+ *      [
+ *          'type'      =>  'text',     //文本类型
+ *          'title'     => '测试文本',   //文本
+ *          'multiple'  => false,       //最多显示多少行 默认不控制
+ *          'width'     => $this->width,//宽度 默认为背景的宽度
+ *          'left'      => 0,           //从图像左边缘到文本左边缘的距离 (可选)
+ *          'top'       => 0,           //从图像上边缘到文本基线的距离 (可选)
+ *          'font'      => 1,           //默认字体
+ *          'align'     =>  'left',     //水平对齐
+ *          'valign'    =>  'center',   //垂直对齐
+ *          'size'      => 12,          //字体大小
+ *          'color'     => '#333333',   //字体颜色
+ *          'angle'     => 0,           //旋转角度
+ *          'call'      =>  null        //回调函数
+ *      ],
+ *      [
+ *          'type'      =>  'image',     //图片
+ *          'src'       => '',          //图片路径
+ *          'opacity'   =>  1,          //透明度
+ *          'left'      =>  0,
+ *          'top'       =>  0,
+ *          'circular'  =>  false,      //是否为圆形
+ *          'position'  =>  'top-left', //定位
+ *          'call'      =>  null        //回调函数
+ *      ]
+ * ]
+ *
+ *

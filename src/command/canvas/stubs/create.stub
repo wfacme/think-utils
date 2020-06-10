@@ -1,0 +1,17 @@
+<?php
+declare (strict_types = 1);
+namespace {%namespace%};
+
+use acme\contracts\CanvasContract;
+
+/**
+ {%classDefault%}
+ * Class {%className%}
+ * @package {%namespace%}
+ */
+class {%className%} extends CanvasContract
+{
+    public function getElements() : array {
+          {%arrayData%}
+    }
+}
