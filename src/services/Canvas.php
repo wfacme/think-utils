@@ -78,7 +78,7 @@ class Canvas
         try{
             if(!in_array($driver,$this->drivers)){
                 $class = new ReflectionClass($driver);
-                $class = $class->newInstance();
+                $class = $class->newInstance($config);
                 if( $class instanceof CanvasContract ){
                     $config = $class->getElements();
                     $driver = $class->driver;

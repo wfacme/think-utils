@@ -8,7 +8,6 @@ class AcmeService extends BaseService
 
 	public $bind = [
         'pipeline' => \acme\basis\Pipeline::class,
-        'wechat' => \acme\services\Wechat::class,
     ];
 
     /**

@@ -12,12 +12,12 @@ interface ConnectorConfigContract
      * 获取小程序配置
      * @return array
      */
-    public static function getWxappConfig() : array ;
+    public function getWxappConfig() : array ;
 
     /**
      * 获取微信公众号配置
      * @return array
      */
-    public static function getWechatConfig() : array ;
+    public function getWechatConfig() : array ;
 
 }

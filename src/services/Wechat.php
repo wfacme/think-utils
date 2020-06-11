@@ -43,7 +43,8 @@ class Wechat
         try {
             if(empty($this->wxapp)){
                 $config = $this->config;
-                $this->wxapp = Factory::miniProgram($config::getWechatConfig());
+                halt($config->getWxappConfig());
+                $this->wxapp = Factory::miniProgram($config->getWxappConfig());
             }
             return $this->wxapp;
         }catch (\Exception | ConnectorException $e){
@@ -55,7 +56,7 @@ class Wechat
         try {
             if(empty($this->wechat)){
                 $config = $this->config;
-                $this->wechat = Factory::officialAccount($config::getWechatConfig());
+                $this->wechat = Factory::officialAccount($config->getWechatConfig());
             }
             return $this->wechat;
         }catch (\Exception | ConnectorException $e){
