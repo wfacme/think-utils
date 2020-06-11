@@ -2,9 +2,9 @@
 
 namespace acme\services;
 
-use acme\contracts\ConnectorConfigContract;
-use acme\exceptions\ConnectorException;
 use EasyWeChat\Factory;
+use acme\exceptions\ConnectorException;
+use acme\contracts\ConnectorConfigContract;
 
 class Wechat
 {
@@ -42,9 +42,7 @@ class Wechat
     public function wxapp(){
         try {
             if(empty($this->wxapp)){
-                $config = $this->config;
-                halt($config->getWxappConfig());
-                $this->wxapp = Factory::miniProgram($config->getWxappConfig());
+                $this->wxapp = Factory::miniProgram($this->config->getWxappConfig());
             }
             return $this->wxapp;
         }catch (\Exception | ConnectorException $e){
@@ -55,8 +53,7 @@ class Wechat
     public function wechat(){
         try {
             if(empty($this->wechat)){
-                $config = $this->config;
-                $this->wechat = Factory::officialAccount($config->getWechatConfig());
+                $this->wechat = Factory::officialAccount($this->config->getWechatConfig());
             }
             return $this->wechat;
         }catch (\Exception | ConnectorException $e){
