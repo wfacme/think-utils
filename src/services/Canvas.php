@@ -416,8 +416,8 @@ class Canvas
      * @return string
      */
     public function path($path=''){
-        if(!empty($path)) $this->path = $path;
-        return empty($this->path) ? app()->getBasePath().'../../files' : $this->path;
+        if(!empty($path)) $this->filePath = $path;
+        return empty($this->filePath) ? app()->getRootPath().'../files' : $this->filePath;
     }
 
     /**

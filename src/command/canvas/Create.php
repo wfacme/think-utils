@@ -69,7 +69,7 @@ class Create extends Command
         if (strpos($name, '\\') !== false) {
             return $name;
         }
-        return 'app\\common\\service\\' . $name;
+        return 'app\\common\\service\\canvas\\' . $name;
     }
 
     protected function getPathName(string $name): string

@@ -8,17 +8,16 @@ namespace acme\contracts;
  */
 interface ConnectorConfigContract
 {
+    /**
+     * 获取小程序配置
+     * @return array
+     */
+    public static function getWxappConfig() : array ;
 
     /**
-     * 获取所有配置
-     * @return mixed
+     * 获取微信公众号配置
+     * @return array
      */
-    public function getConfig();
-
-    /**
-     * 获取配置标识
-     * @return mixed
-     */
-    public function getMark();
+    public static function getWechatConfig() : array ;
 
 }
