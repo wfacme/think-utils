@@ -278,7 +278,7 @@ class Canvas
             //判断是否是完整路径
             if(!is_file($val['src'])){
                 $src = $this->getPath($val['src']);
-                $val['src'] = is_file($src) ? $src : '/images/poster/poster.jpg';
+                $val['src'] = is_file($src) ? $src : $this->getPath('/images/poster/poster.jpg');
             }
         }else{
             throw new CanvasException("图片路径有误");
