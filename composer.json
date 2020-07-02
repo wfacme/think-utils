@@ -25,13 +25,18 @@
     "autoload": {
         "psr-4": {
             "acme\\": "src"
-        }
+        },
+        "files":["helper.php"]
     },
     "extra": {
         "think": {
             "services": [
                 "acme\\AcmeService"
-            ]
-        }
+            ],
+            "config":{
+                "wechat": "config/wechat.php"
+            },
+        },
+
     }
 }

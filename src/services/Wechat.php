@@ -2,80 +2,62 @@
 
 namespace acme\services;
 
+use think\App;
+use think\Config;
 use EasyWeChat\Factory;
 use acme\exceptions\ConnectorException;
-use acme\contracts\ConnectorConfigContract;
+use acme\contracts\ConnectorContract;
 
 class Wechat
 {
 
     /**
-     * 配置读取接口
-     * @var ConnectorConfigContract
+     * 服务
+     * @var array
+     */
+    private $services = [];
+
+    /**
+     * 配置类
+     * @var ConnectorContract
+     */
+    protected $connector;
+
+    /**
+     * @var Config
      */
     protected $config;
 
-    protected $wxapp;
+    public function __construct(
+        Config $config,
+        ConnectorContract $connector
+    ){
+        $this->connector = $connector;
+        $this->config = $config;
+    }
 
-    protected $wxchat;
-
-
-    public function connector(ConnectorConfigContract $api=null,$type=[])
+    public function connector() : void
     {
         try {
-            if(is_null($api)) throw new ConnectorException("无配置读取接口");
-            $this->config = $api;
-            if(!empty($type)){
-                foreach ($type as $val){
-                    if($val=='wxapp'){
-                        $this->wxapp =  $this->wxapp();
-                    }elseif($val=='wechat'){
-                        $this->wechat = $this->wechat();
-                    }
-                }
+            $this->services = array_merge(
+                $this->services,
+                $this->config->get('wechat.services')
+            );
+            foreach ($this->services as $name=>$service){
+                $className = parse_name($name,1);
+                $configFunc = 'get' . $className .  'Config';
+                $serviceClass =  Factory::make(
+                    $className,
+                    $this->connector->{$configFunc}()
+                );
+                $aliasName = 'wechat.'.$name;
+                app()->bind($aliasName,$serviceClass);
+                array_map(function ($item) use ($aliasName,$serviceClass){
+                    app()->bind($aliasName.'.'.$item,$serviceClass->{$item});
+                },$service);
             }
         }catch (\Exception | ConnectorException $e){
             throw new ConnectorException($e->getMessage(),$e->getCode());
         }
     }
-
-    public function wxapp(){
-        try {
-            if(empty($this->wxapp)){
-                $this->wxapp = Factory::miniProgram($this->config->getWxappConfig());
-            }
-            return $this->wxapp;
-        }catch (\Exception | ConnectorException $e){
-            throw new ConnectorException($e->getMessage(),$e->getCode());
-        }
-    }
-
-    public function wechat(){
-        try {
-            if(empty($this->wechat)){
-                $this->wechat = Factory::officialAccount($this->config->getWechatConfig());
-            }
-            return $this->wechat;
-        }catch (\Exception | ConnectorException $e){
-            throw new ConnectorException($e->getMessage(),$e->getCode());
-        }
-    }
-
-    public function subscribe(){
-        return $this->wxapp()->subscribe_message;
-    }
-
-    public function getTemplates($key=false){
-        $templates = $this->subscribe()->getTemplates();
-        if($templates['errmsg']!='ok')  throw new ConnectorException("获取模板失败");
-        $templates = $templates['data'];
-        return $key ? array_column($templates,$key) : $templates;
-    }
-
-    public function getCategory()
-    {
-        $templates = $this->subscribe()->getCategory();
-        return isset($templates['data']) ? array_column($templates['data'],'id') : [];
-    }
-
 }

@@ -1,13 +1,21 @@
 <?php
 namespace acme;
 
+use think\Config;
+use think\facade\App;
+use acme\services\Wechat;
 use think\Service as BaseService;
 
 class AcmeService extends BaseService
 {
+    public $bind = [
+        'pipeline'  => \acme\basis\Pipeline::class,
+        'wechat'    => \acme\services\Wechat::class,
+    ];
 
-	public $bind = [
-        'pipeline' => \acme\basis\Pipeline::class,
+    private $commands = [
+        \acme\command\canvas\Create::class,
+//        \acme\command\make\Migrate::class,
     ];
 
     /**
@@ -15,21 +23,36 @@ class AcmeService extends BaseService
      *
      * @return mixed
      */
-    public function register()
+    public function register( )
     {
-        $this->commands([
-            'canvas:create'	 => \acme\command\canvas\Create::class,
-        ]);
+        $this->registerCommands();
+        if(!empty(config('wechat.class'))) {
+            $this->app->bind(
+                \acme\contracts\ConnectorContract::class,
+                config('wechat.class')
+            );
+        }
     }
-
 
     /**
      * 执行服务
      *
      * @return mixed
      */
-    public function boot()
-    {
+    public function boot(
+        Config $config
+    ) {
+        if(!empty($config->get('wechat.class'))){
+            app('wechat')->connector();
+        }
+    }
 
+    /**
+     * 注册命令行
+     *
+     * @return mixed
+     */
+    private function registerCommands(){
+        $this->commands($this->commands);
     }
 }
