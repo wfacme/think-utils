@@ -26,7 +26,7 @@
         "psr-4": {
             "acme\\": "src"
         },
-        "files":["helper.php"]
+        "files":["./src/helper.php"]
     },
     "extra": {
         "think": {
