@@ -35,8 +35,7 @@
             ],
             "config":{
                 "wechat": "config/wechat.php"
-            },
-        },
-
+            }
+        }
     }
 }
