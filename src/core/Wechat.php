@@ -39,10 +39,13 @@ class Wechat
         $wechatConfig = config('acme.wechat.config');
         if(is_array($wechatConfig)){
             $singleConfig = isset($wechatConfig[$name]) ? $wechatConfig[$name] : [];
-        }else if( is_object($wechatConfig) ){
+        }else if( $wechatConfig ){
             $wechat = new $wechatConfig;
             if($wechat instanceof ConnectorContract){
-                $singleConfig = call_user_func([$wechat,$name]);
+                $singleConfig = call_user_func([
+                    $wechat,
+                    'get'.ucfirst($name).'Config'
+                ]);
             }
         }
         return array_merge($singleConfig,$config);
