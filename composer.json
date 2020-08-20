@@ -34,7 +34,7 @@
                 "acme\\AcmeService"
             ],
             "config":{
-                "wechat": "config/wechat.php"
+                "wechat": "config/acme.php"
             }
         }
     }

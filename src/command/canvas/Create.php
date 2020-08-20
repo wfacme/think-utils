@@ -61,7 +61,7 @@ class Create extends Command
 
     protected function getStub($name='create.stub'): string
     {
-        return __DIR__ . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . $name;
+        return __DIR__ . "/../stubs/" . $name;
     }
 
     protected function getClassName(string $name): string

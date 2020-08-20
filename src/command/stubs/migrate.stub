@@ -1,0 +1,22 @@
+<?php
+
+use think\migration\Migrator;
+use think\migration\db\Column;
+
+class MigratorClass extends Migrator
+{
+    public $tableName = 'MigratorName';
+
+    public function up()
+    {
+        $table = $this->table($this->tableName);
+        $table->setComment('MigratorComment')
+            ->save();
+    }
+
+    public function down(){
+        $table = $this->table($this->tableName);
+        $table->drop();
+    }
+
+}

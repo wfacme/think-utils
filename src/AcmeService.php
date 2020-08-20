@@ -1,6 +1,7 @@
 <?php
 namespace acme;
 
+use acme\core\Validate;
 use think\Config;
 use think\facade\App;
 use acme\services\Wechat;
@@ -9,13 +10,13 @@ use think\Service as BaseService;
 class AcmeService extends BaseService
 {
     public $bind = [
-        'pipeline'  => \acme\basis\Pipeline::class,
-        'wechat'    => \acme\services\Wechat::class,
+        'pipeline'          => \acme\basis\Pipeline::class,
+        'migrate_creator'   => \acme\services\Creator::class,
     ];
 
     private $commands = [
         \acme\command\canvas\Create::class,
-//        \acme\command\make\Migrate::class,
+        \acme\command\Migration\Create::class,
     ];
 
     /**
@@ -26,12 +27,6 @@ class AcmeService extends BaseService
     public function register( )
     {
         $this->registerCommands();
-        if(!empty(config('wechat.class'))) {
-            $this->app->bind(
-                \acme\contracts\ConnectorContract::class,
-                config('wechat.class')
-            );
-        }
     }
 
     /**
@@ -42,9 +37,6 @@ class AcmeService extends BaseService
     public function boot(
         Config $config
     ) {
-        if(!empty($config->get('wechat.class'))){
-            app('wechat')->connector();
-        }
     }
 
     /**
