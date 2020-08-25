@@ -1,0 +1,15 @@
+<?php
+
+use think\migration\Migrator;
+
+class MigratorClass extends Migrator
+{
+    public $tableName = 'MigratorName';
+
+    public function change()
+    {
+        $table = $this->table($this->tableName);
+        $table
+             ->save();
+    }
+}

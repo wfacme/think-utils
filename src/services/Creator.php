@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use Phinx\Util\Util;
 use RuntimeException;
 use think\App;
+use think\console\Input;
 
 class Creator
 {
@@ -17,7 +18,7 @@ class Creator
         $this->app = $app;
     }
 
-    public function create(string $className,$comment='')
+    public function create(string $className,Input $input,$comment='')
     {
         $path = $this->ensureDirectory();
 
@@ -25,12 +26,14 @@ class Creator
             throw new InvalidArgumentException(sprintf('The migration class name "%s" is invalid. Please use CamelCase format.', $className));
         }
 
-        if (!Util::isUniqueMigrationClassName($className, $path)) {
+        $fileNameCreate = implode('_',[$className,date('is'),mt_rand(0,50000)]);
+
+        $fileName = Util::mapClassNameToFileName($fileNameCreate);
+
+        if (!Util::isUniqueMigrationClassName($fileNameCreate, $path)) {
             throw new InvalidArgumentException(sprintf('The migration class name "%s" already exists', $className));
         }
-        // Compute the file path
-        $fileName = 'm'.Util::mapClassNameToFileName($className);
-        $classNameNew = explode('.',$fileName)[0];
+
         $filePath = $path . DIRECTORY_SEPARATOR . $fileName;
 
         if (is_file($filePath)) {
@@ -41,12 +44,11 @@ class Creator
         $aliasedClassName = null;
 
         // Load the alternative template if it is defined.
-        $contents = file_get_contents($this->getTemplate());
-
+        $contents = file_get_contents($this->getTemplate($input));
         // inject the class names appropriate to this migration
         $contents = strtr($contents, [
-            'MigratorClass'     => $classNameNew,
-            'MigratorName'      => $className,
+            'MigratorClass'     => str_replace('_','',$fileNameCreate),
+            'MigratorName'      => parse_name($className),
             'MigratorComment'   => $comment,
         ]);
 
@@ -60,11 +62,9 @@ class Creator
     protected function ensureDirectory()
     {
         $path = $this->app->getRootPath() . 'database' . DIRECTORY_SEPARATOR . 'migrations';
-
         if (!is_dir($path) && !mkdir($path, 0755, true)) {
             throw new InvalidArgumentException(sprintf('directory "%s" does not exist', $path));
         }
-
         if (!is_writable($path)) {
             throw new InvalidArgumentException(sprintf('directory "%s" is not writable', $path));
         }
@@ -72,8 +72,9 @@ class Creator
         return $path;
     }
 
-    protected function getTemplate()
+    protected function getTemplate(Input $input)
     {
-        return __DIR__ . '/../command/stubs/migrate.stub';
+        $change = $input->getOption('change');
+        return __DIR__ . '/../command/stubs/' . ($change?'change.stub':'migrate.stub');
     }
 }

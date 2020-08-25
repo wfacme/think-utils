@@ -277,16 +277,17 @@ class Canvas
      * @throws CanvasException
      */
     public function getImagePath($val=[]){
-        if(isset($val['src'])&&!empty($val['src'])){
-            //判断是否是完整路径
-            if(!is_file($val['src'])){
-                $src = $this->getPath($val['src']);
-                $val['src'] = is_file($src) ? $src : $this->getPath('/images/poster/poster.jpg');
+        $path = $val['src'];
+        $path = $this->getPath('/images/poster/poster.jpg');
+        if(!empty($val['src'])){
+            if(is_file($val['src'])){
+                $path = $this->getPath($val['src']);
+            }else if(is_file($this->getPath($val['src']))){
+                $path = $this->getPath($val['src']);
             }
-        }else{
-            throw new CanvasException("图片路径有误");
         }
-        return $val['src'];
+
+        return $path;
     }
 
     /**

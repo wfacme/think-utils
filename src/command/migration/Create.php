@@ -16,6 +16,7 @@ class Create extends Command
         $this->setName('make:migration')
             ->addArgument('name', Argument::REQUIRED, 'What is the name of the migration?')
             ->addOption('--comment', "-c", Option::VALUE_REQUIRED, 'table commment')
+            ->addOption('--change', "-a", Option::VALUE_NONE, '创建升级迁移文件')
             ->setDescription('Create a new migration（创建新的迁移文件）');
     }
 
@@ -37,7 +38,7 @@ class Create extends Command
 
         $comment = $input->getOption('comment');
 
-        $path = $creator->create($className,$comment);
+        $path = $creator->create($className,$input,$comment);
 
         $output->writeln('<info>created</info> .' . str_replace(getcwd(), '', realpath($path)));
     }
