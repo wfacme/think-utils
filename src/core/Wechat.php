@@ -58,7 +58,7 @@ class Wechat
      */
     public static function __callStatic($action,$args)
     {
-        $config = self::config($action,$args);
+        $config = self::config($action,count($args)==1?$args[0]:[]);
         return Factory::make($action,$config);
     }
 
