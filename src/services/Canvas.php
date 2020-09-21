@@ -284,9 +284,10 @@ class Canvas
                 $path = $this->getPath($val['src']);
             }else if(is_file($this->getPath($val['src']))){
                 $path = $this->getPath($val['src']);
+            }else if(@fopen( $val['src'], 'r' )){
+                $path = $val['src'];
             }
         }
-
         return $path;
     }
 
